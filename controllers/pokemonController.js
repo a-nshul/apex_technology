@@ -46,9 +46,9 @@ const addPokemon = async (req, res) => {
 // Update a Pokémon
 const updatePokemon = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id}=req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({ message: 'plz provide valid id' });
+     res.status(404).json({message:"plz provide valid id to delete pokemon data "})
     }
     if(!req.body){
       return res.status(400).json({ message: 'provide data to update' });
