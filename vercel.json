@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "api/**/*.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/api/$1.js" },
+      { "src": "/api-docs", "dest": "/api/api-docs.js" }
+    ],
+    "env": {
+      "MONGO_URL": "mongodb+srv://upadhyay041298:6WIzp50nuxPuQAQr@cluster0.6kggrvd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    }
+  }
+  

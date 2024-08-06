@@ -1,5 +1,6 @@
 const Pokemon = require('../models/pokemonModel');
 const mongoose = require('mongoose');
+
 // Get all Pokémon
 const getPokemons = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ const getPokemons = async (req, res) => {
     res.status(500).json({ message: error.message});
   }
 };
+
 // Get Pokemon data from valid id 
 const getPokemonById = async (req, res) => {
   try {
@@ -29,6 +31,7 @@ const getPokemonById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 // Add a new Pokémon
 const addPokemon = async (req, res) => {
   try {
@@ -46,19 +49,23 @@ const addPokemon = async (req, res) => {
 // Update a Pokémon
 const updatePokemon = async (req, res) => {
   try {
-    const {id}=req.params;
+    const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-     res.status(404).json({message:"plz provide valid id to delete pokemon data "})
+      return res.status(404).json({ message: 'Please provide a valid ID' });
     }
-    if(!req.body){
-      return res.status(400).json({ message: 'provide data to update' });
+    if (!req.body) {
+      return res.status(400).json({ message: 'Please provide data to update' });
     }
-    const updatedPokemon = await Pokemon.findByIdAndUpdate((id),{body:req.body},{new:true});
-    res.status(200).json({updatedPokemon,message:"successfully updated Pokemon"});
+    const updatedPokemon = await Pokemon.findByIdAndUpdate(id, req.body, { new: true });
+    if (!updatedPokemon) {
+      return res.status(404).json({ message: 'No Pokémon found with this ID' });
+    }
+    res.status(200).json({ updatedPokemon, message: 'Successfully updated Pokémon' });
   } catch (error) {
-    res.status(500).json({ message: error.message});
+    res.status(500).json({ message: error.message });
   }
 };
+
 
 // Delete a Pokémon
 const deletePokemon = async (req, res) => {

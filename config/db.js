@@ -4,7 +4,8 @@ require('dotenv').config();
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
-      useUnifiedTopology: true
+      connectTimeoutMS: 30000, 
+      socketTimeoutMS: 45000,
     });
     console.log('Connected to MongoDB');
   } catch (error) {
